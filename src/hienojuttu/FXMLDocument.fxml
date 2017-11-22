@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="737.0" prefWidth="935.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hienojuttu.FXMLDocumentController">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="Menu">
+            <items>
+              <MenuItem fx:id="restrat" mnemonicParsing="false" onAction="#handleRestartAction" text="restart" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Hieno juttu">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleRandom" text="Random" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+      <HBox>
+         <children>
+            <Canvas fx:id="canvas" height="500.0" width="500.0" />
+            <VBox prefHeight="500.0" prefWidth="419.0">
+               <children>
+                  <VBox id="slomoKontrol">
+                     <children>
+                        <Label fx:id="slomoLabel" prefHeight="18.0" prefWidth="423.0" text="Slomo" textAlignment="CENTER" />
+                        <Slider fx:id="slomoSlider" blockIncrement="1.0" majorTickUnit="2.5" max="5.0" minorTickCount="2" showTickLabels="true" showTickMarks="true" />
+                        <Label text="Koko" />
+                     </children>
+                  </VBox>
+                  <Slider fx:id="kokoSlider" blockIncrement="1.0" majorTickUnit="10.0" max="50.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" value="50.0">
+                     <effect>
+                        <Blend opacity="0.0" />
+                     </effect>
+                  </Slider>
+                  <HBox>
+                     <children>
+                        <VBox prefHeight="401.0" prefWidth="100.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" onAction="#handleMaa" text="Maa">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="materiaalit" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" onAction="#handleVesi" text="Vesi" toggleGroup="$materiaalit" />
+                              <RadioButton mnemonicParsing="false" onAction="#handleHiekka" selected="true" text="Hiekka" toggleGroup="$materiaalit" />
+                              <RadioButton mnemonicParsing="false" onAction="#handleIlma" text="Ilma" toggleGroup="$materiaalit" />
+                              <RadioButton mnemonicParsing="false" onAction="#handleHelium" text="Helium" toggleGroup="$materiaalit" />
+                              <RadioButton mnemonicParsing="false" onAction="#handleHydrogen" text="Vety" toggleGroup="$materiaalit" />
+                              <RadioButton mnemonicParsing="false" onAction="#handleFire" text="Tuli" toggleGroup="$materiaalit" />
+                           </children>
+                        </VBox>
+                        <VBox>
+                           <children>
+                              <CheckBox id="pause" fx:id="pause" mnemonicParsing="false" onAction="#handlePause" text="Pause" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label fx:id="label" text="Label" />
+   </children>
+</VBox>
