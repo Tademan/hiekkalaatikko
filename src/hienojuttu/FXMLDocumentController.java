@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -171,6 +170,39 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleFire(ActionEvent event) {
         materiaali = MyMap.NodeType.FIRE;
+    }
+    
+    
+    @FXML
+    private void handleVesiButton(ActionEvent event) {
+        this.map = new MyMap(500,500,3,MyMap.NodeType.WATER);
+    }
+
+    @FXML
+    private void handleMaaButton(ActionEvent event) {
+        this.map = new MyMap(500,500,3,MyMap.NodeType.STONE);
+    }
+
+    @FXML
+    private void handleHiekkaButton(ActionEvent event) {
+       this.map = new MyMap(500,500,3,MyMap.NodeType.SAND);
+    }
+
+    @FXML
+    private void handleIlmaButton(ActionEvent event) {
+       this.map = new MyMap(500,500,3,MyMap.NodeType.AIR);
+    }
+    @FXML
+    private void handleHeliumButton(ActionEvent event) {
+        this.map = new MyMap(500,500,3,MyMap.NodeType.HELIUM);
+    }
+    @FXML
+    private void handleHydrogenButton(ActionEvent event) {
+        this.map = new MyMap(500,500,3,MyMap.NodeType.HYDROGEN);
+    }
+    @FXML
+    private void handleFireButton(ActionEvent event) {
+        this.map = new MyMap(500,500,3,MyMap.NodeType.FIRE);
     }
 
     @FXML

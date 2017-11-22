@@ -50,8 +50,19 @@ public class MyMap {
                     if (luku == 5) {
                         map[i][j] = NodeType.WATER;
                     }
-                    
+
                 }
+            }
+        }
+    }
+
+    public MyMap(int x, int y, int mode, MyMap.NodeType type) {
+        this.korkeus = y;
+        this.leveys = x;
+        map = new NodeType[x][y];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                map[i][j] = type;
             }
         }
     }

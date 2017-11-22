@@ -21,6 +21,7 @@ public class HienoJuttu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        setUserAgentStylesheet(STYLESHEET_CASPIAN);
         MyMap map = new MyMap(100, 200,0);
         //Set up instance instead of using static load() method
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
