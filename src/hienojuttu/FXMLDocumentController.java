@@ -26,17 +26,22 @@ import javafx.scene.paint.Color;
  */
 public class FXMLDocumentController implements Initializable {
 
-
     @FXML
     private VBox slomoKontrol;
     @FXML
     private Label label;
     @FXML
+    private Label todLabel;
+    @FXML
     private Label slomoLabel;
     @FXML
     private Slider slomoSlider;
-     @FXML
+    @FXML
+    private Slider ruudukkoSlider;
+    @FXML
     private Slider kokoSlider;
+    @FXML
+    private Slider todSlider;
     @FXML
     private MenuItem restrat;
     @FXML
@@ -54,11 +59,12 @@ public class FXMLDocumentController implements Initializable {
 
     private MyMap map;
     public int slomo;
+    private int sutiMode;
     private MyMap.NodeType materiaali = MyMap.NodeType.SAND;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.map = new MyMap(500, 500,0);
+        this.map = new MyMap(500, 500, 0);
         System.out.println("hoi");
     }
 
@@ -72,30 +78,48 @@ public class FXMLDocumentController implements Initializable {
 
     public void kello() {
         if (!pause.selectedProperty().get()) {
-            int slomoRaja = (int)slomoSlider.getValue();
+            int slomoRaja = (int) slomoSlider.getValue();
             this.slomo++;
             if (this.slomo > slomoRaja) {
-                map.simuloi();
+                if (slomoRaja < 0) {
+                    for (int i = 0; i < -slomoRaja; i++) {
+                        map.simuloi();
+                    }
+                } else {
+                    map.simuloi();
+                }
+
                 this.slomo = 0;
             }
         }
         this.label.setText(this.materiaali.toString());
+        this.todLabel.setText("Tod:" + (int) this.todSlider.getValue());
+
         GraphicsContext piirturi = canvas.getGraphicsContext2D();
         piirturi.setFill(Color.BLACK);
         piirturi.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        
+
         canvas.setOnMouseDragged((event) -> {
-            int koko = (int)kokoSlider.getValue();
-            
+            int koko = (int) kokoSlider.getValue();
+
             for (int i = -koko; i <= koko; i++) {
                 for (int j = -koko; j <= koko; j++) {
+                    if (this.map.arpoja.nextInt(100) < (int) todSlider.getValue()) {
 
-                    map.setNode((int) event.getX() + i, (int) event.getY() + j, materiaali);
+                        if (Math.hypot(i, j) < koko && sutiMode == 0) {
+                            map.setNode((int) event.getX() + i, (int) event.getY() + j, materiaali);
+                        }
+                        if (sutiMode == 1) {
+                            map.setNode((int) event.getX() + i, (int) event.getY() + j, materiaali);
+                        }
+                        if (sutiMode == 2 && i%(int)ruudukkoSlider.getValue() == 0 && j%(int)ruudukkoSlider.getValue() == 0) {
+                            map.setNode((int) event.getX() + i, (int) event.getY() + j, materiaali);
+                        }
+                    }
                 }
             }
 
         });
-        
 
         for (int i = 0; i < map.leveys; i++) {
             for (int j = 0; j < map.korkeus; j++) {
@@ -127,7 +151,6 @@ public class FXMLDocumentController implements Initializable {
                     piirturi.setFill(Color.RED);
                     piirturi.fillOval(i, j, 1, 1);
                 }
-                
 
             }
         }
@@ -136,7 +159,10 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleRestartAction(ActionEvent event) {
-        this.map = new MyMap(500, 500,0);
+        this.map = new MyMap(500, 500, 0);
+        this.slomoSlider.setValue(0);
+        this.kokoSlider.setValue(50);
+        this.todSlider.setValue(90);
 
     }
 
@@ -159,61 +185,79 @@ public class FXMLDocumentController implements Initializable {
     private void handleIlma(ActionEvent event) {
         materiaali = MyMap.NodeType.AIR;
     }
+
     @FXML
     private void handleHelium(ActionEvent event) {
         materiaali = MyMap.NodeType.HELIUM;
     }
+
     @FXML
     private void handleHydrogen(ActionEvent event) {
         materiaali = MyMap.NodeType.HYDROGEN;
     }
+
     @FXML
     private void handleFire(ActionEvent event) {
         materiaali = MyMap.NodeType.FIRE;
     }
-    
-    
+
     @FXML
     private void handleVesiButton(ActionEvent event) {
-        this.map = new MyMap(500,500,3,MyMap.NodeType.WATER);
+        this.map = new MyMap(500, 500, 3, MyMap.NodeType.WATER);
     }
 
     @FXML
     private void handleMaaButton(ActionEvent event) {
-        this.map = new MyMap(500,500,3,MyMap.NodeType.STONE);
+        this.map = new MyMap(500, 500, 3, MyMap.NodeType.STONE);
     }
 
     @FXML
     private void handleHiekkaButton(ActionEvent event) {
-       this.map = new MyMap(500,500,3,MyMap.NodeType.SAND);
+        this.map = new MyMap(500, 500, 3, MyMap.NodeType.SAND);
     }
 
     @FXML
     private void handleIlmaButton(ActionEvent event) {
-       this.map = new MyMap(500,500,3,MyMap.NodeType.AIR);
+        this.map = new MyMap(500, 500, 3, MyMap.NodeType.AIR);
     }
+
     @FXML
     private void handleHeliumButton(ActionEvent event) {
-        this.map = new MyMap(500,500,3,MyMap.NodeType.HELIUM);
+        this.map = new MyMap(500, 500, 3, MyMap.NodeType.HELIUM);
     }
+
     @FXML
     private void handleHydrogenButton(ActionEvent event) {
-        this.map = new MyMap(500,500,3,MyMap.NodeType.HYDROGEN);
+        this.map = new MyMap(500, 500, 3, MyMap.NodeType.HYDROGEN);
     }
+
     @FXML
     private void handleFireButton(ActionEvent event) {
-        this.map = new MyMap(500,500,3,MyMap.NodeType.FIRE);
+        this.map = new MyMap(500, 500, 3, MyMap.NodeType.FIRE);
     }
 
     @FXML
     private void handlePause(ActionEvent event) {
 
     }
+
     @FXML
     private void handleRandom(ActionEvent event) {
-        this.map = new MyMap(500,500,1);
+        this.map = new MyMap(500, 500, 1);
     }
-    
-    
+
+    @FXML
+    private void handleNeliö(ActionEvent event) {
+        this.sutiMode = 1;
+    }
+
+    @FXML
+    private void handleYmpyrä(ActionEvent event) {
+        this.sutiMode = 0;
+    }
+    @FXML
+    private void handleRuudukko(ActionEvent event) {
+        this.sutiMode = 2;
+    }
 
 }

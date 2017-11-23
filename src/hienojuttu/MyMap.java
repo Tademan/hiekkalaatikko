@@ -5,7 +5,11 @@
  */
 package hienojuttu;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 /**
  *
@@ -31,7 +35,7 @@ public class MyMap {
         if (mode == 1) {
             for (int i = 0; i < x; i++) {
                 for (int j = 0; j < y; j++) {
-                    int luku = arpoja.nextInt(6);
+                    int luku = arpoja.nextInt(7);
                     if (luku == 0) {
                         map[i][j] = NodeType.AIR;
                     }
@@ -50,6 +54,10 @@ public class MyMap {
                     if (luku == 5) {
                         map[i][j] = NodeType.WATER;
                     }
+                    if (luku == 6) {
+                        map[i][j] = NodeType.STONE;
+                    }
+                    
 
                 }
             }
@@ -76,8 +84,15 @@ public class MyMap {
     }
 
     public void simuloi() {
-        for (int i = 0; i < this.leveys; i++) {
-            for (int j = 0; j < this.korkeus; j++) {
+        List<Integer> iit = new ArrayList<>();
+        for (int i = 0; i < this.leveys; i++) iit.add(i);
+        Collections.shuffle(iit);
+        List<Integer> jiit = new ArrayList<>();
+        for (int i = 0; i < this.leveys; i++) jiit.add(i);
+        Collections.shuffle(jiit);
+        
+        for (int i : iit) {
+            for (int j : jiit) {
                 if (this.getNode(i, j) == MyMap.NodeType.SAND) {
                     int r = arpoja.nextInt(3) - 1;
                     MyMap.NodeType type = this.getNode(i + r, j + 1);
@@ -169,7 +184,7 @@ public class MyMap {
                             this.setNode(i + r1, j + 1, MyMap.NodeType.WATER);
                             this.setNode(i, j, MyMap.NodeType.AIR);
                         }
-                    } else if (this.getNode(i, j - 1) == MyMap.NodeType.WATER) { //jos yläpuolella on vettä
+                    } else if (this.getNode(i, j + 1) == MyMap.NodeType.WATER) { //jos yläpuolella on vettä
                         int r1 = arpoja.nextInt(13) - 6;
                         if (this.getNode(i + r1, j) == MyMap.NodeType.AIR) {
                             this.setNode(i + r1, j, MyMap.NodeType.WATER);

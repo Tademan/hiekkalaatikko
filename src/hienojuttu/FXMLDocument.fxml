@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.Blend?>
@@ -25,6 +26,7 @@
             <Menu mnemonicParsing="false" text="Hieno juttu">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleRandom" text="Random" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleMaaButton" text="Maa" />
                   <MenuItem mnemonicParsing="false" onAction="#handleVesiButton" text="Vesi" />
                   <MenuItem mnemonicParsing="false" onAction="#handleHiekkaButton" text="Hiekka" />
@@ -43,8 +45,6 @@
                <children>
                   <VBox id="slomoKontrol">
                      <children>
-                        <Label fx:id="slomoLabel" prefHeight="18.0" prefWidth="423.0" text="Slomo" textAlignment="CENTER" />
-                        <Slider fx:id="slomoSlider" blockIncrement="1.0" majorTickUnit="2.5" max="5.0" minorTickCount="2" showTickLabels="true" showTickMarks="true" />
                         <Label text="Koko" />
                      </children>
                   </VBox>
@@ -70,9 +70,29 @@
                               <RadioButton mnemonicParsing="false" onAction="#handleFire" text="Tuli" toggleGroup="$materiaalit" />
                            </children>
                         </VBox>
-                        <VBox prefHeight="366.0" prefWidth="87.0">
+                        <VBox>
+                           <children>
+                              <RadioButton mnemonicParsing="false" onAction="#handleYmpyrä" selected="true" text="Ympyrä">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="sutiMode" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" onAction="#handleNeliö" text="Neliö" toggleGroup="$sutiMode" />
+                              <RadioButton mnemonicParsing="false" onAction="#handleRuudukko" text="Ruudukko" toggleGroup="$sutiMode" />
+                              <Label fx:id="todLabel" text="Tod" />
+                              <HBox prefHeight="421.0" prefWidth="200.0">
+                                 <children>
+                                    <Slider fx:id="todSlider" blockIncrement="0.1" majorTickUnit="10.0" orientation="VERTICAL" prefHeight="408.0" prefWidth="51.0" showTickLabels="true" showTickMarks="true" value="90.0" />
+                                    <Slider fx:id="ruudukkoSlider" blockIncrement="1.0" majorTickUnit="2.0" max="10.0" minorTickCount="4" orientation="VERTICAL" prefHeight="408.0" prefWidth="51.0" showTickLabels="true" showTickMarks="true" value="2.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <CheckBox id="pause" fx:id="pause" graphicTextGap="10.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#handlePause" text="Pause" />
+                              <Label fx:id="slomoLabel" prefHeight="18.0" prefWidth="423.0" text="Slomo" textAlignment="CENTER" />
+                              <Slider fx:id="slomoSlider" blockIncrement="1.0" majorTickUnit="5.0" max="5.0" min="-30.0" minorTickCount="5" orientation="VERTICAL" prefHeight="421.0" prefWidth="59.0" showTickLabels="true" showTickMarks="true" />
                            </children>
                         </VBox>
                      </children>
@@ -81,6 +101,6 @@
             </VBox>
          </children>
       </HBox>
-      <Label fx:id="label" text="Label" />
+      <Label fx:id="label" text="Materiaali" />
    </children>
 </VBox>
